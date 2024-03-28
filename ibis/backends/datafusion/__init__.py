@@ -358,6 +358,10 @@ class Backend(SQLBackend, CanCreateCatalog, CanCreateDatabase, CanCreateSchema, 
             self.con.deregister_table(table_name)
             self.con.register_record_batches(table_name, [[source]])
             return self.table(table_name)
+        elif isinstance(source, ibis.expr.types.Expr) and hasattr(source, "to_pyarrow_batches"):
+            self.con.deregister_table(table_name)
+            self.con.register_record_batch_reader(table_name, source.to_pyarrow_batches())
+            return self.table(table_name)
         elif isinstance(source, pa.RecordBatchReader):
             self.con.deregister_table(table_name)
             self.con.register_record_batch_reader(table_name, source)
