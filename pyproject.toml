@@ -509,7 +509,7 @@ omit = [
 universal = false
 
 [tool.poetry-dynamic-versioning]
-enable = true
+enable = false
 dirty = true
 style = "pep440"
 pattern = '^(?P<base>\d+(\.\d+)*)'
@@ -518,4 +518,4 @@ format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ bump_version(base, 
 
 [build-system]
 requires = ["poetry-core>=1.1.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
+build-backend = "poetry.core.masonry.api"
